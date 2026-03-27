@@ -10,9 +10,8 @@ import java.util.UUID;
 public interface CarService {
     CarResponseDTO createCar(CarCreateRequestDTO dto);
 
-    List<Car> getAllCars();
-
-    Car getCarById(UUID id);
+    List<CarResponseDTO> getAllCars();
+    CarResponseDTO getCarById(UUID id);
 
     void deleteCar(UUID id);
 }

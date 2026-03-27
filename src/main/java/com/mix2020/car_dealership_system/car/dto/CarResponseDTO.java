@@ -17,14 +17,4 @@ public class CarResponseDTO {
     private Double price;
     private Integer mileage;
     private CarStatus status;
-
-    public CarResponseDTO(Car car) {
-        this.id = car.getId();
-        this.brand = car.getBrand();
-        this.model = car.getModel();
-        this.year = car.getYear();
-        this.price = car.getPrice();
-        this.mileage = car.getMileage();
-        this.status = car.getStatus();
-    }
 }

@@ -43,18 +43,35 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public List<Car> getAllCars() {
-        return carRepository.findAll();
+    public List<CarResponseDTO> getAllCars() {
+        return carRepository.findAll()
+                .stream()
+                .map(this::mapToResponse)
+                .toList();
     }
 
     @Override
-    public Car getCarById(UUID id) {
-        return carRepository.findById(id)
+    public CarResponseDTO getCarById(UUID id) {
+        Car car = carRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Car not found"));
+
+        return mapToResponse(car);
     }
 
     @Override
     public void deleteCar(UUID id) {
         carRepository.deleteById(id);
+    }
+
+    private CarResponseDTO mapToResponse(Car car) {
+        return CarResponseDTO.builder()
+                    .id(car.getId())
+                    .brand(car.getBrand())
+                    .model(car.getModel())
+                    .year(car.getYear())
+                    .price(car.getPrice())
+                    .mileage(car.getMileage())
+                    .status(car.getStatus())
+                .build();
     }
 }
