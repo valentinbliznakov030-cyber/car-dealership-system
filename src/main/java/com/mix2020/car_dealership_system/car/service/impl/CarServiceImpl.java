@@ -6,19 +6,18 @@ import com.mix2020.car_dealership_system.car.entity.Car;
 import com.mix2020.car_dealership_system.car.entity.CarStatus;
 import com.mix2020.car_dealership_system.car.repository.CarRepository;
 import com.mix2020.car_dealership_system.car.service.CarService;
+import com.mix2020.car_dealership_system.exception.NotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class CarServiceImpl implements CarService {
 
     private final CarRepository carRepository;
-
-    public CarServiceImpl(CarRepository carRepository) {
-        this.carRepository = carRepository;
-    }
 
     @Override
     public CarResponseDTO createCar(CarCreateRequestDTO dto) {
@@ -53,7 +52,7 @@ public class CarServiceImpl implements CarService {
     @Override
     public CarResponseDTO getCarById(UUID id) {
         Car car = carRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Car not found"));
+                .orElseThrow(() -> new NotFoundException("Car not found"));
 
         return mapToResponse(car);
     }
